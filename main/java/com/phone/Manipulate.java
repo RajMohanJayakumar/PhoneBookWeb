@@ -49,23 +49,24 @@ public class Manipulate extends HttpServlet{
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		String str = jsonToString(request);
 		contactData = jsonPharse(str);
         addContact(contactData);
         System.out.println("Contact Added");
-
 	}
 	
 	@SuppressWarnings("deprecation")
 	protected void doPut(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
 		
+//		response.addHeader("Access-Control-Allow-Origin", "*");
+//		response.addHeader("Access-Control-Allow-Methods", "'GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'");
 		mTemp = (String)request.getParameter("email");
 		delete(response,mTemp);
 		mTemp = (String)request.getParameter("data");
 		contactData = jsonPharse(mTemp);
 		addContact(contactData);
 		System.out.println("Contact Updated");
-		
 		
      }
 	
@@ -77,14 +78,18 @@ public class Manipulate extends HttpServlet{
 //		}
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 		if(request.getParameter("todo").equals("getOne")) {
+			
+			response.addHeader("Access-Control-Allow-Origin", "*");
 			mTemp = request.getParameter("email");
 			
 			String json = ow.writeValueAsString(mUUID_Data.get(mEmail_UUID.get(mTemp)));
 			response.setContentType("application/json");
 			response.getWriter().print(json);
+			System.out.println("getOne Successful");
 		}
 		
 		else if(request.getParameter("todo").equals("getAll")){
+			response.addHeader("Access-Control-Allow-Origin", "*");
 			List<Contact> list = new ArrayList<Contact>();
 			for(String s:mOrdered) {
 				Contact json = mUUID_Data.get(mName_UUID.get(s));
@@ -93,23 +98,25 @@ public class Manipulate extends HttpServlet{
 			String str = ow.writeValueAsString(list);
 			response.setContentType("application/json");
 			response.getWriter().print(str);
+			System.out.println("ShowAll Successful");
 		}
 //		
 	}
 	
-//	pub
-	
 	@SuppressWarnings("deprecation")
 	protected void doDelete(HttpServletRequest request,HttpServletResponse response) throws IOException {
 
+//		response.addHeader("Access-Control-Allow-Origin", "*");
+//		response.addHeader("Access-Control-Allow-Methods", "'GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'");
 		mTemp = request.getParameter("email");
 		delete(response,mTemp);
 		System.out.println("Contact Deleted");
 		
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void delete(HttpServletResponse response, String email) {
+//		response.addHeader("Access-Control-Allow-Origin", "*");
+//		response.setHeader("Access-Control-Allow-Methods", "DELETE");
 		if (mEmail_UUID.containsKey(email)) {
 
 			
@@ -128,13 +135,18 @@ public class Manipulate extends HttpServlet{
             //Removing name from Name TreeSet
             mOrdered.remove(contactData.getName());
 
+//            response.addHeader("Access-Control-Allow-Origin", "*");
+//            response.setHeader("Access-Control-Allow-Methods", "DELETE");
             response.setStatus(200);
         } else {
-            response.setStatus(404, "Record Not Found");
+//        	response.addHeader("Access-Control-Allow-Origin", "*");
+//        	response.setHeader("Access-Control-Allow-Methods", "DELETE");
+            response.setStatus(404);
         }
 	}
 	
 	public void addContact(Contact contactData) {
+		
 		//Generating random UUID
         mUuid = UUID.randomUUID().toString();
 
@@ -159,7 +171,6 @@ public class Manipulate extends HttpServlet{
 			{
 			str.append(line);
 			}
-		
 		String jsonString = str.toString();
 		System.out.println(jsonString);
 		return jsonString;
