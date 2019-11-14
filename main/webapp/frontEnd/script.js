@@ -1,52 +1,3 @@
-// // var request
-// // function myFunc(id)
-// // {   
-// // 	if(id == "username")
-// // 	{
-// // 		var num = 1
-// // 	}else
-// // 	{
-// // 		var num = 2	
-// // 	}
-// // 	request = new XMLHttpRequest();
-// // 	var enteredValue = document.getElementById(id).value
-// // 	var url = "http://localhost:8080/manipulate?todo=getAll"
-// // 	try{
-// // 		request.onreadystatechange = function()
-// // 		{
-// // 			if(request.readyState == 4)
-// // 				{
-// // 				 var current = document.getElementById("demo").innerHTML = request.responseText;
-// // 				 document.getElementById(id).focus();
-// // 				}
-// // 		}
-// // 		request.open("GET",url,true);
-// // 		request.send()
-// // 	}catch(e)
-// // 	{
-// // 		alert("Unabe to Reach Server");
-// // 	}
-// // }
-
-// // const Http = new XMLHttpRequest();
-// // const url='http://localhost:8080/manipulate?todo=getAll';
-// // Http.open("GET", url);
-// // Http.send();
-
-// // Http.onreadystatechange = (e) => {
-// //   console.log(Http.responseText)
-// // }
-// function showall(){
-// 	cconst Http = new XMLHttpRequest();
-// const url='http://localhost:8080/manipulate?todo=getAll';
-// Http.open('GET', url);
-// Http.send();
-
-// Http.onreadystatechange = (e) => {
-//   console.log(Http.responseText)
-// }
-// }
-
 window.onload = function() {
   phonebook();
 };
@@ -63,32 +14,90 @@ Http.onreadystatechange = (e) => {
 }
 
 function phonebook() {
-	const html = "<h1>Hello World</h1>";
-// 	"<button id='"'addf'"' class='"'btn btn-primary'"'>Add Contact</button><table class='"'table'"'<tr><thead>"+
-// 	"<th>Name</th>"+
-// 	"<th>Phone Number</th>"+
-// 	"<th>Email</th>"+
-// 	"<th>Update</th>"+
-// 	"<th>Delete</th>"+
-// "</thead>"+
-// "</tr>"+
-// "</table>";
-     document.getElementById("maindisp").innerHTML=html;
+	const html = `<div class="container">
+<div class="jumbotron">	
+<tbody id="tbody">
+<button class="btn btn-primary" onclick="newContact();">Add Contact</button>
+<button class="btn btn-primary" onclick="update();">Update</button>
+<button class="btn btn-primary" onclick="contactDeleted();">Delete</button>
+<table class="table">
+<tr>
+<thead>
+	<th>Name</th>
+	<th>Phone Number</th>
+	<th>Email</th>
+	<th>Update</th>
+	<th>Delete</th>
+</thead>
+</tr>
+</table>
+</tbody>
+</div>
+</div>`;
+    document.getElementById('maindisp').innerHTML=html;
 }
 
-function addRow() {
-  const div = document.createElement('div');
+function newContact() {
+	const html = `<h2>Add Contact</h2>
+<div class="form-group">
+<label>Enter Name:</label>
+<input class="form-control" type="text" id="id" value="" required>
+</div>
+<div class="form-group">
+<label>Enter Phone Number</label>
+<input class="form-control" type="number" id="name" value="" required>
+</div>
+<div class="form-group">
+<label>Enter Email</label>
+<input class="form-control" type="text" id="city" value="" required><br/>
+<button id="save" type="submit" class="btn btn-lg btn-success" onclick="contactSaved();">Save</button>
+<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
+</div>`;
+    document.getElementById('maindisp').innerHTML=html;
+}
 
-  div.id = 'maindisp';
+function update() {
+	const html = `<h2>Update Contact</h2>
+<div class="form-group">
+<label>Enter Name:</label>
+<input class="form-control" type="text" id="id" value="" required>
+</div>
+<div class="form-group">
+<label>Enter Phone Number</label>
+<input class="form-control" type="number" id="name" value="" required>
+</div>
+<div class="form-group">
+<label>Enter Email</label>
+<input class="form-control" type="text" id="city" value="" required><br/>
+<button id="save" type="submit" class="btn btn-lg btn-success" onclick="contactUpdated();">Update</button>
+<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
+</div>`;
+    document.getElementById('maindisp').innerHTML=html;
+}
 
-  div.innerHTML = `
-    <input type="text" name="name" value="" />
-    <input type="text" name="value" value="" />
-    <label> 
-      <input type="checkbox" name="check" value="1" /> Checked? 
-    </label>
-    <input type="button" value="-" onclick="removeRow(this)" />
-  `;
+function contactDeleted() {
+	const html = `<h2>Contact deleted</h2>
+<div class="form-group">
+	<br>
+<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
+</div>`;
+    document.getElementById('maindisp').innerHTML=html;
+}
 
-  document.getElementById('maindisp').appendChild(div);
+function contactSaved() {
+	const html = `<h2>Contact Saved</h2>
+<div class="form-group">
+	<br>
+<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
+</div>`;
+    document.getElementById('maindisp').innerHTML=html;
+}
+
+function contactUpdated() {
+	const html = `<h2>Contact Updated</h2>
+<div class="form-group">
+	<br>
+<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
+</div>`;
+    document.getElementById('maindisp').innerHTML=html;
 }
