@@ -17,9 +17,7 @@ function phonebook() {
 		const html = `<div class="container">
 <div class="jumbotron">	
 <tbody id="tbody">
-<button class="btn btn-primary" onclick="newContact();">Add Contact</button>
-<button class="btn btn-primary" onclick="update();">Update</button>
-<button class="btn btn-primary" onclick="contactDeleted();">Delete</button>
+<button class="btn btn-primary" onclick="newContact();">Add a new Contact</button>
 <table class="table">
 <tr>
 <thead>
@@ -29,8 +27,8 @@ function phonebook() {
 	<th>Update</th>
 	<th>Delete</th>
 </thead>
-</tr>
-</table>
+</tr>`;
+const strh = `</table>
 </tbody>
 </div>
 </div>`;
@@ -51,10 +49,10 @@ function myFunction(arr) {
     var out = "";
     var i;
 arr.forEach((e)=>
-out += e.name+" "+e.phoneNumber+" "+e.email+"<br>"
+out += '<tr><td>'+e.name+'</td><td>'+e.phoneNumber+'</td><td>'+e.email+'</td><td><button id="'+e.email+'" value="1" class="upd btn btn-success" onclick="update();">Update</button></td><td><button id="del" value='+e.email+' class="btn btn-danger" onclick="contactDeleted();">Delete</button></td></tr>'
 )
     var str = html.concat(out);
-    console.log(out);
+    var str = str.concat(strh);
     document.getElementById("maindisp").innerHTML = str;
 }
 }
