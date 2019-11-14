@@ -14,7 +14,7 @@ Http.onreadystatechange = (e) => {
 }
 
 function phonebook() {
-	const html = `<div class="container">
+		const html = `<div class="container">
 <div class="jumbotron">	
 <tbody id="tbody">
 <button class="btn btn-primary" onclick="newContact();">Add Contact</button>
@@ -34,7 +34,29 @@ function phonebook() {
 </tbody>
 </div>
 </div>`;
-    document.getElementById('maindisp').innerHTML=html;
+    var xmlhttp = new XMLHttpRequest();
+var url = "http://localhost:8080/manipulate?todo=getAll";
+
+xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var myArr = JSON.parse(this.responseText);
+        myFunction(myArr);
+    }
+};
+
+xmlhttp.open("GET", url, true);
+xmlhttp.send();
+
+function myFunction(arr) {
+    var out = "";
+    var i;
+arr.forEach((e)=>
+out += e.name+" "+e.phoneNumber+" "+e.email+"<br>"
+)
+    var str = html.concat(out);
+    console.log(out);
+    document.getElementById("maindisp").innerHTML = str;
+}
 }
 
 function newContact() {

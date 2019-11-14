@@ -59,8 +59,6 @@ public class Manipulate extends HttpServlet{
 	@SuppressWarnings("deprecation")
 	protected void doPut(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
 		
-//		response.addHeader("Access-Control-Allow-Origin", "*");
-//		response.addHeader("Access-Control-Allow-Methods", "'GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'");
 		mTemp = (String)request.getParameter("email");
 		delete(response,mTemp);
 		mTemp = (String)request.getParameter("data");
@@ -71,15 +69,10 @@ public class Manipulate extends HttpServlet{
      }
 	
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws IOException {
-//		String email = request.getParameter("email");
-//		contactData = mUUID_Data.get(mEmail_UUID.get(mTemp));
-//		for(String s:mOrdered) {
-//			System.out.println(s);
-//		}
+
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 		if(request.getParameter("todo").equals("getOne")) {
 			
-			response.addHeader("Access-Control-Allow-Origin", "*");
 			mTemp = request.getParameter("email");
 			
 			String json = ow.writeValueAsString(mUUID_Data.get(mEmail_UUID.get(mTemp)));
@@ -89,7 +82,6 @@ public class Manipulate extends HttpServlet{
 		}
 		
 		else if(request.getParameter("todo").equals("getAll")){
-			response.addHeader("Access-Control-Allow-Origin", "*");
 			List<Contact> list = new ArrayList<Contact>();
 			for(String s:mOrdered) {
 				Contact json = mUUID_Data.get(mName_UUID.get(s));
@@ -106,8 +98,6 @@ public class Manipulate extends HttpServlet{
 	@SuppressWarnings("deprecation")
 	protected void doDelete(HttpServletRequest request,HttpServletResponse response) throws IOException {
 
-//		response.addHeader("Access-Control-Allow-Origin", "*");
-//		response.addHeader("Access-Control-Allow-Methods", "'GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'");
 		mTemp = request.getParameter("email");
 		delete(response,mTemp);
 		System.out.println("Contact Deleted");
@@ -115,8 +105,6 @@ public class Manipulate extends HttpServlet{
 	}
 	
 	public void delete(HttpServletResponse response, String email) {
-//		response.addHeader("Access-Control-Allow-Origin", "*");
-//		response.setHeader("Access-Control-Allow-Methods", "DELETE");
 		if (mEmail_UUID.containsKey(email)) {
 
 			
@@ -135,12 +123,8 @@ public class Manipulate extends HttpServlet{
             //Removing name from Name TreeSet
             mOrdered.remove(contactData.getName());
 
-//            response.addHeader("Access-Control-Allow-Origin", "*");
-//            response.setHeader("Access-Control-Allow-Methods", "DELETE");
             response.setStatus(200);
         } else {
-//        	response.addHeader("Access-Control-Allow-Origin", "*");
-//        	response.setHeader("Access-Control-Allow-Methods", "DELETE");
             response.setStatus(404);
         }
 	}
