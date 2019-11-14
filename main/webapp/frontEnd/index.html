@@ -1,0 +1,42 @@
+<!DOCTYPE HTML5>
+<html>
+<head>
+	<title>Phonebook</title>
+	<link rel="stylesheet" href="style.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="script.js"></script>
+</head>
+<body>
+	<div id="header"><center><h1>Phonebook</h1></center></div>
+	<div class="clearfix">
+		<div id="leftpanel">
+			<div class="tab">
+  <input id="clickMe" class="tablinks" type="button" value="clickme" onclick="showall();" />
+  <button class="tablinks" onclick="search()">Search</button>
+  <button class="tablinks" onclick="openCity(event, 'Tokyo')">Edit</button>
+  <button class="tablinks" onclick="openCity(event, 'London')">Delete</button>
+  <button class="tablinks" onclick="openCity(event, 'Paris')">ClearAll</button>
+</div>
+			</div>
+		<div id="rightpanel">
+			<button onclick="myFunction()">Click me</button>
+
+<p id="demo"></p>
+
+<script>
+function myFunction() {
+ const Http = new XMLHttpRequest();
+const url='http://localhost:8080/manipulate?email=Ram2@gmail.com';
+Http.open('DELETE', url);
+Http.send();
+console.log(Http.responseText)
+Http.onreadystatechange = (e) => {
+  console.log(Http.responseText)
+}
+}
+</script>
+		</div>
+	</div>
+	<div id="footer"><center>phone</center></div>
+</body>
+</html>
