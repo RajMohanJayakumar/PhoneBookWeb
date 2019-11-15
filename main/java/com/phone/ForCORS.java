@@ -1,6 +1,9 @@
 package com.phone;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.TreeSet;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -8,7 +11,9 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet Filter implementation class ForCORS
@@ -34,8 +39,19 @@ public class ForCORS implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		
+		HttpServletRequest req = (HttpServletRequest)request;
+		HttpSession session = req.getSession(false);
+		if(session == null) {
+			session = req.getSession();
+			session.setAttribute("nameUuid", new HashMap<String,String>());
+			session.setAttribute("emailUuid", new HashMap<String,String>());
+			session.setAttribute("uuidData", new HashMap<String,Contact>());
+			session.setAttribute("mOrdered", new TreeSet<String>());
+			
 			((HttpServletResponse) response).addHeader("Access-Control-Allow-Origin", "*");
 			((HttpServletResponse) response).addHeader("Access-Control-Allow-Methods","GET, OPTIONS, DELETE, HEAD, PUT, POST");
+		}
 		chain.doFilter(request, response);
 	}
 

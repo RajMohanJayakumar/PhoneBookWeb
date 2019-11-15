@@ -26,17 +26,28 @@ import javax.servlet.http.HttpSession;
 
 public class Manipulate extends HttpServlet{
 	
+	HashMap<String, String> mName_UUID;
+	HashMap<String, String> mEmail_UUID;
+	HashMap<String, Contact> mUUID_Data;
+	TreeSet<String> mOrdered;
+	
+	
+	public void assignObjects(HttpServletRequest request) {
+	HttpSession session = request.getSession();
+	
     //Creating HashMap for Name-UUID record
-    HashMap<String, String> mName_UUID = new HashMap<>();
+    mName_UUID = (HashMap)session.getAttribute("nameUuid");
 
     //Creating HashMap for Email-UUID record
-    HashMap<String, String> mEmail_UUID = new HashMap<>();
+    mEmail_UUID = (HashMap)session.getAttribute("emailUuid");
  
     //Creating HashMap for UUID-ContactData record
-    HashMap<String, Contact> mUUID_Data = new HashMap<>();
+    mUUID_Data = (HashMap)session.getAttribute("uuidData");
 
     //Creating TreeSet for name record to get 'sorted name list' while iterating
-    TreeSet<String> mOrdered = new TreeSet<>();
+    mOrdered = (TreeSet)session.getAttribute("mOrdered");
+    
+	}
     
     //Creating Contact Variable
     Contact contactData;
@@ -49,7 +60,7 @@ public class Manipulate extends HttpServlet{
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		response.addHeader("Access-Control-Allow-Origin", "*");
+		assignObjects(request);
 		String str = jsonToString(request);
 		contactData = jsonPharse(str);
         addContact(contactData);
@@ -59,6 +70,7 @@ public class Manipulate extends HttpServlet{
 	@SuppressWarnings("deprecation")
 	protected void doPut(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
 		
+		assignObjects(request);
 		mTemp = (String)request.getParameter("email");
 		delete(response,mTemp);
 		mTemp = (String)request.getParameter("data");
@@ -70,6 +82,7 @@ public class Manipulate extends HttpServlet{
 	
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws IOException {
 
+		assignObjects(request);
 		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 		if(request.getParameter("todo").equals("getOne")) {
 			
@@ -98,6 +111,7 @@ public class Manipulate extends HttpServlet{
 	@SuppressWarnings("deprecation")
 	protected void doDelete(HttpServletRequest request,HttpServletResponse response) throws IOException {
 
+		assignObjects(request);
 		mTemp = request.getParameter("email");
 		delete(response,mTemp);
 		System.out.println("Contact Deleted");
@@ -156,7 +170,6 @@ public class Manipulate extends HttpServlet{
 			str.append(line);
 			}
 		String jsonString = str.toString();
-		System.out.println(jsonString);
 		return jsonString;
 	}
 	
@@ -174,7 +187,7 @@ public class Manipulate extends HttpServlet{
 	         e.printStackTrace();
 	      } catch (JsonMappingException e)
 	      {
-	         e.printStackTrace();
+	         e.printStackTrace(); 
 	      } catch (IOException e)
 	      {
 	         e.printStackTrace();
