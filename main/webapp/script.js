@@ -20,6 +20,23 @@ Http.onreadystatechange = (e) => {
 }
 }
 
+var deleteBtn = document.querySelectorAll('.btn-danger');
+deleteBtn.forEach(btn=>{
+	btn.addEventListener('click', function(event){
+		event.preventDefault();
+		var email = document.querySelector('.btn-danger').closest('tr').querySelector('.email').innerText;
+		console.log(email);
+	})
+})
+
+// deleteRec('r@g');
+
+function deleteRec(email){
+	call('http://localhost:8080/manipulate',new payLoad('delete',null,new params(email),phoneBookDisp));
+}
+
+
+
 function newContactAdd(){
 	hideSections(sections);
 	document.getElementById('newContact').style.display = 'block';
@@ -41,17 +58,17 @@ function contactDeleted() {
 	document.getElementById('contactDeleted').style.display = 'block';
 }
 
-function cDelete(email){
-	    var xmlhttp = new XMLHttpRequest();
-var url = "http://localhost:8080/manipulate?email="+email;
+// function cDelete(email){
+// 	    var xmlhttp = new XMLHttpRequest();
+// var url = "http://localhost:8080/manipulate?email="+email;
 
-xmlhttp.open("DELETE", url, true);
-xmlhttp.send();
-deleteRow()
-}
+// xmlhttp.open("DELETE", url, true);
+// xmlhttp.send();
+// deleteRow()
+// }
 
 function saveContact(){
-	call('http://localhost:8080/manipulate',new payLoad('post','null',new params('Ram',8667,'ram@gmail.com')),phoneBookDisp);
+	call('http://localhost:8080/manipulate',new payLoad('post',new data('Ram',8667,'ram@gmail.com'),null),phoneBookDisp);
 	contactSaved();
 }
 
@@ -73,7 +90,7 @@ function phonebook() {
 function phoneBookDisp(res) {
 
 	var tbody1 = document.createElement('tbody');
-	res.forEach((e)=>{
+	res.data.forEach((e)=>{
 
 	var tr = document.createElement('tr');
 	var td1 = document.createElement("td");
@@ -88,6 +105,7 @@ function phoneBookDisp(res) {
 
 	var td3 = document.createElement("td");
 	var data = document.createTextNode(e.email);
+	td3.setAttribute('class','email');
 	td3.appendChild(data);
 	tr.append(td3);
 
@@ -119,8 +137,8 @@ var call = function(url,payLoad,callBack){
   	url : url,
   	data : payLoad.params
   })
-  .then(res => callBack(res.data))
-  .catch(err => console.log(err));
+  .then(res => callBack(res))
+  .catch(err => callBack());
 }
 
 var payLoad = function(method,data,params){
@@ -129,8 +147,12 @@ var payLoad = function(method,data,params){
 	this.params = params;
 }
 
-var params = function(name,phoneNumber,email){
+var data = function(name,phoneNumber,email){
 	this.name = name;
 	this.phoneNumber = phoneNumber;
+	this.email = email;
+}
+
+var params = function(email){
 	this.email = email;
 }
