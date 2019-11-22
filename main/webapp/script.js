@@ -20,15 +20,6 @@ Http.onreadystatechange = (e) => {
 }
 }
 
-var deleteBtn = document.querySelectorAll('.btn-danger');
-deleteBtn.forEach(btn=>{
-	btn.addEventListener('click', function(event){
-		event.preventDefault();
-		var email = document.querySelector('.btn-danger').closest('tr').querySelector('.email').innerText;
-		console.log(email);
-	})
-})
-
 // deleteRec('r@g');
 
 function deleteRec(email){
@@ -63,7 +54,7 @@ function newContact() {
 	document.getElementById('newContact').style.display = 'block';
 }
 
-function update() {
+function update(email) {
 	hideSections(sections);
 	document.getElementById('update').style.display = 'block';
 }
@@ -72,15 +63,6 @@ function contactDeleted() {
 	hideSections(sections);
 	document.getElementById('contactDeleted').style.display = 'block';
 }
-
-// function cDelete(email){
-// 	    var xmlhttp = new XMLHttpRequest();
-// var url = "http://localhost:8080/manipulate?email="+email;
-
-// xmlhttp.open("DELETE", url, true);
-// xmlhttp.send();
-// deleteRow()
-// }
 
 function saveContact(){
 	call('http://localhost:8080/manipulate',new payLoad('post',new data('Ram',8667,'ram@gmail.com'),null),phoneBookDisp);
@@ -110,11 +92,13 @@ function phoneBookDisp(res) {
 	var tr = document.createElement('tr');
 	var td1 = document.createElement("td");
 	var data = document.createTextNode(e.name);
+	td1.setAttribute('class','name');
 	td1.appendChild(data);
 	tr.append(td1);
 
 	var td2 = document.createElement("td");
 	var data = document.createTextNode(e.phoneNumber);
+	td2.setAttribute('class','phoneNumber');
 	td2.appendChild(data);
 	tr.append(td2);
 
@@ -144,6 +128,30 @@ function phoneBookDisp(res) {
 	document.getElementById('pTable').innerText = '';
 	document.getElementById("pTable").appendChild(tbody1);
 
+	handleEvents();
+}
+
+function handleEvents(){
+	var deleteBtn = document.querySelectorAll('.btn-danger');
+	var updateBtn = document.querySelectorAll('.btn-success');
+	deleteBtn.forEach(btn=>{
+		btn.addEventListener('click', function(event){
+			event.preventDefault();
+			var email = event.target.closest('tr').querySelector('.email').innerText;
+			deleteRec(email);
+		})
+	})
+
+	updateBtn.forEach(btn=>{
+		btn.addEventListener('click', function(event){
+			event.preventDefault();
+			var phoneNumber = event.target.closest('tr').querySelector('.phoneNumber').innerText;
+			var name = event.target.closest('tr').querySelector('.name').innerText;
+			var email = event.target.closest('tr').querySelector('.email').innerText;
+			console.log(email);
+			update(email);
+		})
+	})
 }
 
 var call = function(url,payLoad,callBack){
@@ -153,7 +161,7 @@ var call = function(url,payLoad,callBack){
   	data : payLoad.params
   })
   .then(res => callBack(res))
-  .catch(err => callBack());
+  .catch(err => console.log(err));
 }
 
 var payLoad = function(method,data,params){
