@@ -31,7 +31,6 @@ public class Manipulate extends HttpServlet{
 	HashMap<String, Contact> mUUID_Data;
 	TreeSet<String> mOrdered;
 	
-	
 	public void assignObjects(HttpServletRequest request) {
 	HttpSession session = request.getSession();
 	
@@ -58,6 +57,7 @@ public class Manipulate extends HttpServlet{
     //Global counter used by different methods to provide series of numbers to the show method
     int mCount = 1;
 	
+    //Getting values from the request and storing it to the hashmap
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		assignObjects(request);
@@ -67,6 +67,7 @@ public class Manipulate extends HttpServlet{
         System.out.println("Contact Added");
 	}
 	
+	//Getting values from the request and updating the existing record
 	@SuppressWarnings("deprecation")
 	protected void doPut(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
 		
@@ -80,6 +81,7 @@ public class Manipulate extends HttpServlet{
 		
      }
 	
+	//sending values to the front end as a response
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) throws IOException {
 
 		assignObjects(request);
@@ -105,9 +107,9 @@ public class Manipulate extends HttpServlet{
 			response.getWriter().print(str);
 			System.out.println("ShowAll Successful");
 		}
-//		
 	}
 	
+	//Getting a value(email) from the front-end and deleting the respective record
 	@SuppressWarnings("deprecation")
 	protected void doDelete(HttpServletRequest request,HttpServletResponse response) throws IOException {
 
@@ -175,6 +177,7 @@ public class Manipulate extends HttpServlet{
 	
 	public Contact jsonPharse(String str) throws IOException {
 		
+		//Creating reference to store the contact variable
 		Contact contact = null;
 		
 	      ObjectMapper mapper = new ObjectMapper();
