@@ -32,7 +32,22 @@ deleteBtn.forEach(btn=>{
 // deleteRec('r@g');
 
 function deleteRec(email){
-	call('http://localhost:8080/manipulate',new payLoad('delete',null,new params(email),phoneBookDisp));
+	axios.delete('http://localhost:8080/manipulate?email='+email,{});
+	phonebook();
+}
+
+function updateRec(email1,name,email,phone,callBack){
+	axios.delete('http://localhost:8080/manipulate?email='+email1,{});
+	callBack(name,email,phone);
+}
+
+function saveRec(name,email,phone){
+	axios.post('http://localhost:8080/manipulate',{
+		name : name,
+		phoneNumber : phone,
+		email : email
+	});
+	phonebook();
 }
 
 
