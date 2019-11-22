@@ -22,55 +22,23 @@ Http.onreadystatechange = (e) => {
 
 function newContactAdd(){
 	hideSections(sections);
-	// document.getElementsByClassName('sections').style.display = 'none';
-		// document.getElementById('phoneBook').style.display = 'none';
 	document.getElementById('newContact').style.display = 'block';
-	// document.getElementById('update').style.display = 'none';
-	// document.getElementById('contactDeleted').style.display = 'none';
-	// document.getElementById('contactSaved').style.display = 'none';
-	// document.getElementById('contactUpdated').style.display = 'none';
-	// var name=document.querySelector('#name').value;
-	// console.log(name);
-	// var phone=document.querySelector('#phone').value;
-	// var email=document.querySelector('#email').value;
 }
 
 
 function newContact() {
 	hideSections(sections);
-	// document.getElementsByClassName('sections').style.display = 'none';
-	// 	var phoneBookElm = document.getElementById('phoneBook').style.display = 'none';
-	// if(phoneBookElm){
-	// 	phoneBookElm.style.display = 'none';
-	// }
-	// document.getElementsByClassName('sections').style.display = 'none';
 	document.getElementById('newContact').style.display = 'block';
-	// document.getElementById('update').style.display = 'none';
-	// document.getElementById('contactDeleted').style.display = 'none';
-	// document.getElementById('contactSaved').style.display = 'none';
-	// document.getElementById('contactUpdated').style.display = 'none';
 }
 
 function update() {
 	hideSections(sections);
-	// document.getElementsByClassName('sections').style.display = 'none';
-	// document.getElementById('phoneBook').style.display = 'none';
-	// document.getElementById('newContact').style.display = 'none';
 	document.getElementById('update').style.display = 'block';
-	// document.getElementById('contactDeleted').style.display = 'none';
-	// document.getElementById('contactSaved').style.display = 'none';
-	// document.getElementById('contactUpdated').style.display = 'none';
 }
 
 function contactDeleted() {
 	hideSections(sections);
-	// document.getElementsByClassName('sections').style.display = 'none';
-	// document.getElementById('phoneBook').style.display = 'none';
-	// document.getElementById('newContact').style.display = 'none';
-	// document.getElementById('update').style.display = 'none';
 	document.getElementById('contactDeleted').style.display = 'block';
-	// document.getElementById('contactSaved').style.display = 'none';
-	// document.getElementById('contactUpdated').style.display = 'none';
 }
 
 function cDelete(email){
@@ -82,64 +50,42 @@ xmlhttp.send();
 deleteRow()
 }
 
+function saveContact(){
+	call('http://localhost:8080/manipulate',new payLoad('post','null',new params('Ram',8667,'ram@gmail.com')),phoneBookDisp);
+	contactSaved();
+}
 
 function contactSaved() {
 	hideSections(sections);
-	// document.querySelectorAll('.sections')
-	// document.getElementById('phoneBook').style.display = 'none';
-	// document.getElementById('newContact').style.display = 'none';
-	// document.getElementById('update').style.display = 'none';
-	// document.getElementById('contactDeleted').style.display = 'none';
-	// document.getElementById('contactUpdated').style.display = 'none';
 	document.getElementById('contactSaved').style.display = 'block';
 	
 }
 function contactUpdated() {
 	hideSections(sections);
-	// document.querySelectorAll('.sections').style.display = 'none';
-	// document.getElementById('phoneBook').style.display = 'none';
-	// document.getElementById('newContact').style.display = 'none';
-	// document.getElementById('update').style.display = 'none';
-	// document.getElementById('contactDeleted').style.display = 'none';
-	// document.getElementById('contactSaved').style.display = 'none';
 	document.getElementById('contactUpdated').style.display = 'block';
 }
 function phonebook() {
-	// document.location.reload();
 	hideSections(sections);	
-	// document.getElementById('save').closest().style.display = 'none';
-	// document.getElementById('newContact').style.display = 'none';
-	// document.getElementById('update').style.display = 'none';
-	// document.getElementById('contactDeleted').style.display = 'none';
-	// document.getElementById('contactSaved').style.display = 'none';
-	// document.getElementById('contactUpdated').style.display = 'none';
 	document.getElementById('phoneBook').style.display = 'block';
-	
-    var xmlhttp = new XMLHttpRequest();
-var url = "http://localhost:8080/manipulate?todo=getAll";
+	call('http://localhost:8080/manipulate?todo=getAll',new payLoad('get','null','null'),phoneBookDisp);
+	}
 
-xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-        var myArr = JSON.parse(this.responseText);
-        myFunction(myArr);
-    }
-};
+function phoneBookDisp(res) {
 
-xmlhttp.open("GET", url, true);
-xmlhttp.send();
-
-function myFunction(arr) {
 	var tbody1 = document.createElement('tbody');
-arr.forEach((e)=>{
+	res.forEach((e)=>{
+
 	var tr = document.createElement('tr');
 	var td1 = document.createElement("td");
 	var data = document.createTextNode(e.name);
 	td1.appendChild(data);
 	tr.append(td1);
+
 	var td2 = document.createElement("td");
 	var data = document.createTextNode(e.phoneNumber);
 	td2.appendChild(data);
 	tr.append(td2);
+
 	var td3 = document.createElement("td");
 	var data = document.createTextNode(e.email);
 	td3.appendChild(data);
@@ -161,7 +107,30 @@ arr.forEach((e)=>{
 	tbody1.append(tr);
 
 })	
+
 	document.getElementById('pTable').innerText = '';
 	document.getElementById("pTable").appendChild(tbody1);
+
 }
+
+var call = function(url,payLoad,callBack){
+	axios({
+  	method : payLoad.method,
+  	url : url,
+  	data : payLoad.params
+  })
+  .then(res => callBack(res.data))
+  .catch(err => console.log(err));
+}
+
+var payLoad = function(method,data,params){
+	this.method = method;
+	this.data = data;
+	this.params = params;
+}
+
+var params = function(name,phoneNumber,email){
+	this.name = name;
+	this.phoneNumber = phoneNumber;
+	this.email = email;
 }
