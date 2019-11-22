@@ -6,14 +6,96 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-	<script src="script.js"></script>
+	
 </head>
 <body>
 	<div style="height: 50px; color:blue;"><center><h1>Phonebook</h1></center></div>
 	<div class="container">
 	<div class="jumbotron">
-		<div id="maindisp"></div>
+
+			<div class="sections" id="phoneBook">
+				<tbody id="tbody">
+<button class="btn btn-primary" onclick="newContact();">Add a new Contact</button>
+<table class="table" id = "pTable">
+<tr>
+<thead>
+	<th>Name</th>
+	<th>Phone Number</th>
+	<th>Email</th>
+	<th>Update</th>
+	<th>Delete</th>
+</thead>
+</tr>
+
+</table>
+</div>
+
+<div class="sections" id="newContact">
+				<h2>Add Contact</h2>
+<div class="form-group">
+<label>Enter Name:</label>
+<input class="form-control" type="text" id="name" value="" required>
+</div>
+<div class="form-group">
+<label>Enter Phone Number</label>
+<input class="form-control" type="number" id="phone" value="" required>
+</div>
+<div class="form-group">
+<label>Enter Email</label>
+<input class="form-control" type="text" id="email" value="" required><br/>
+<button id="save" type="submit" class="btn btn-lg btn-success" onclick="contactSaved();">Save</button>
+<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
+</div>
+</div>
+
+
+<div class="sections" id="update">
+	<h2>Update Contact</h2>
+<div class="form-group">
+<label>Enter Name:</label>
+<input class="form-control" type="text" id="id" value="" required>
+</div>
+<div class="form-group">
+<label>Enter Phone Number</label>
+<input class="form-control" type="number" id="name" value="" required>
+</div>
+<div class="form-group">
+<label>Enter Email</label>
+<input class="form-control" type="text" id="city" value="" required><br/>
+<button id="save" type="submit" class="btn btn-lg btn-success" onclick="contactUpdated();">Update</button>
+<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
+</div>
+</div>
+
+
+<div class="sections" id="contactDeleted">
+	<h2>Contact deleted</h2>
+<div class="form-group">
+	<br>
+<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
+</div>
+<div id=""></div>
+</div>
+
+<div class="sections" id="contactSaved">
+	<h2>Contact Saved</h2>
+<div class="form-group">
+	<br>
+<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
+</div>
+</div>
+
+<div class="sections" id="contactUpdated">
+	<h2>Contact Updated</h2>
+<div class="form-group">
+	<br>
+<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
+</div>
+</div>
+			</div>
+		</div>
 	</div>
 	</div>
+	<script src="script.js"></script>
 </body>
 </html>

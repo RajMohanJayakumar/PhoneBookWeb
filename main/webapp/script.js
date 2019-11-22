@@ -2,6 +2,13 @@ window.onload = function() {
   phonebook();
 };
 
+let sections = document.querySelectorAll('.sections')
+function hideSections (sections){
+sections.forEach(function(userItem) {
+  userItem.style.display = 'none';
+});
+}
+
 function search(){
 	 const Http = new XMLHttpRequest();
 const url='http://localhost:8080/manipulate?email=Ram2@gmail.com';
@@ -14,33 +21,100 @@ Http.onreadystatechange = (e) => {
 }
 
 function newContactAdd(){
-	var name=document.querySelector('#name').value;
-	console.log(name);
-	var phone=document.querySelector('#phone').value;
-	var email=document.querySelector('#email').value;
-
-
+	hideSections(sections);
+	// document.getElementsByClassName('sections').style.display = 'none';
+		// document.getElementById('phoneBook').style.display = 'none';
+	document.getElementById('newContact').style.display = 'block';
+	// document.getElementById('update').style.display = 'none';
+	// document.getElementById('contactDeleted').style.display = 'none';
+	// document.getElementById('contactSaved').style.display = 'none';
+	// document.getElementById('contactUpdated').style.display = 'none';
+	// var name=document.querySelector('#name').value;
+	// console.log(name);
+	// var phone=document.querySelector('#phone').value;
+	// var email=document.querySelector('#email').value;
 }
 
+
+function newContact() {
+	hideSections(sections);
+	// document.getElementsByClassName('sections').style.display = 'none';
+	// 	var phoneBookElm = document.getElementById('phoneBook').style.display = 'none';
+	// if(phoneBookElm){
+	// 	phoneBookElm.style.display = 'none';
+	// }
+	// document.getElementsByClassName('sections').style.display = 'none';
+	document.getElementById('newContact').style.display = 'block';
+	// document.getElementById('update').style.display = 'none';
+	// document.getElementById('contactDeleted').style.display = 'none';
+	// document.getElementById('contactSaved').style.display = 'none';
+	// document.getElementById('contactUpdated').style.display = 'none';
+}
+
+function update() {
+	hideSections(sections);
+	// document.getElementsByClassName('sections').style.display = 'none';
+	// document.getElementById('phoneBook').style.display = 'none';
+	// document.getElementById('newContact').style.display = 'none';
+	document.getElementById('update').style.display = 'block';
+	// document.getElementById('contactDeleted').style.display = 'none';
+	// document.getElementById('contactSaved').style.display = 'none';
+	// document.getElementById('contactUpdated').style.display = 'none';
+}
+
+function contactDeleted() {
+	hideSections(sections);
+	// document.getElementsByClassName('sections').style.display = 'none';
+	// document.getElementById('phoneBook').style.display = 'none';
+	// document.getElementById('newContact').style.display = 'none';
+	// document.getElementById('update').style.display = 'none';
+	document.getElementById('contactDeleted').style.display = 'block';
+	// document.getElementById('contactSaved').style.display = 'none';
+	// document.getElementById('contactUpdated').style.display = 'none';
+}
+
+function cDelete(email){
+	    var xmlhttp = new XMLHttpRequest();
+var url = "http://localhost:8080/manipulate?email="+email;
+
+xmlhttp.open("DELETE", url, true);
+xmlhttp.send();
+deleteRow()
+}
+
+
+function contactSaved() {
+	hideSections(sections);
+	// document.querySelectorAll('.sections')
+	// document.getElementById('phoneBook').style.display = 'none';
+	// document.getElementById('newContact').style.display = 'none';
+	// document.getElementById('update').style.display = 'none';
+	// document.getElementById('contactDeleted').style.display = 'none';
+	// document.getElementById('contactUpdated').style.display = 'none';
+	document.getElementById('contactSaved').style.display = 'block';
+	
+}
+function contactUpdated() {
+	hideSections(sections);
+	// document.querySelectorAll('.sections').style.display = 'none';
+	// document.getElementById('phoneBook').style.display = 'none';
+	// document.getElementById('newContact').style.display = 'none';
+	// document.getElementById('update').style.display = 'none';
+	// document.getElementById('contactDeleted').style.display = 'none';
+	// document.getElementById('contactSaved').style.display = 'none';
+	document.getElementById('contactUpdated').style.display = 'block';
+}
 function phonebook() {
-		const html = `<div class="container">
-<div class="jumbotron">	
-<tbody id="tbody">
-<button class="btn btn-primary" onclick="newContact();">Add a new Contact</button>
-<table class="table">
-<tr>
-<thead>
-	<th>Name</th>
-	<th>Phone Number</th>
-	<th>Email</th>
-	<th>Update</th>
-	<th>Delete</th>
-</thead>
-</tr>`;
-const strh = `</table>
-</tbody>
-</div>
-</div>`;
+	// document.location.reload();
+	hideSections(sections);	
+	// document.getElementById('save').closest().style.display = 'none';
+	// document.getElementById('newContact').style.display = 'none';
+	// document.getElementById('update').style.display = 'none';
+	// document.getElementById('contactDeleted').style.display = 'none';
+	// document.getElementById('contactSaved').style.display = 'none';
+	// document.getElementById('contactUpdated').style.display = 'none';
+	document.getElementById('phoneBook').style.display = 'block';
+	
     var xmlhttp = new XMLHttpRequest();
 var url = "http://localhost:8080/manipulate?todo=getAll";
 
@@ -55,152 +129,39 @@ xmlhttp.open("GET", url, true);
 xmlhttp.send();
 
 function myFunction(arr) {
-    var out = "";
-    var i;
-arr.forEach((e)=>
-out += '<tr><td>'+e.name+'</td><td>'+e.phoneNumber+'</td><td>'+e.email+'</td><td><button id="'+e.email+'" value="1" class="upd btn btn-success" onclick="update();">Update</button></td><td><button id="del" value='+e.email+' class="btn btn-danger" onclick="cDelete(\'' + e.email + '\');">Delete</button></td></tr>'
-)
-    var str = html.concat(out);
-    var str = str.concat(strh);
-    document.getElementById("maindisp").innerHTML = str;
+	var tbody1 = document.createElement('tbody');
+arr.forEach((e)=>{
+	var tr = document.createElement('tr');
+	var td1 = document.createElement("td");
+	var data = document.createTextNode(e.name);
+	td1.appendChild(data);
+	tr.append(td1);
+	var td2 = document.createElement("td");
+	var data = document.createTextNode(e.phoneNumber);
+	td2.appendChild(data);
+	tr.append(td2);
+	var td3 = document.createElement("td");
+	var data = document.createTextNode(e.email);
+	td3.appendChild(data);
+	tr.append(td3);
+
+	var td4 = document.createElement("td");
+	var btn1 = document.createElement("BUTTON");
+	btn1.innerText = "Update";
+	btn1.setAttribute('class','btn btn-success')
+	td4.appendChild(btn1);
+	tr.append(td4);
+
+	var td5 = document.createElement("td");
+	var btn2 = document.createElement("BUTTON");
+	btn2.innerText = "Delete";
+	btn2.setAttribute('class','btn btn-danger');
+	td5.appendChild(btn2);
+	tr.append(td5);
+	tbody1.append(tr);
+
+})	
+	document.getElementById('pTable').innerText = '';
+	document.getElementById("pTable").appendChild(tbody1);
 }
-}
-
-function newContact() {
-	const html = `<h2>Add Contact</h2>
-<div class="form-group">
-<label>Enter Name:</label>
-<input class="form-control" type="text" id="name" value="" required>
-</div>
-<div class="form-group">
-<label>Enter Phone Number</label>
-<input class="form-control" type="number" id="phone" value="" required>
-</div>
-<div class="form-group">
-<label>Enter Email</label>
-<input class="form-control" type="text" id="email" value="" required><br/>
-<button id="save" type="submit" class="btn btn-lg btn-success" onclick="newContactAdd();">Save</button>
-<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
-</div>`;
-    document.getElementById('maindisp').innerHTML=html;
-}
-
-function update() {
-	const html = `<h2>Update Contact</h2>
-<div class="form-group">
-<label>Enter Name:</label>
-<input class="form-control" type="text" id="id" value="" required>
-</div>
-<div class="form-group">
-<label>Enter Phone Number</label>
-<input class="form-control" type="number" id="name" value="" required>
-</div>
-<div class="form-group">
-<label>Enter Email</label>
-<input class="form-control" type="text" id="city" value="" required><br/>
-<button id="save" type="submit" class="btn btn-lg btn-success" onclick="contactUpdated();">Update</button>
-<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
-</div>`;
-    document.getElementById('maindisp').innerHTML=html;
-}
-
-function contactDeleted() {
-	const html = `<h2>Contact deleted</h2>
-<div class="form-group">
-	<br>
-<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
-</div>`;
-    document.getElementById('maindisp').innerHTML=html;
-}
-
-function contactSaved() {
-	const html = `<h2>Contact Saved</h2>
-<div class="form-group">
-	<br>
-<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
-</div>`;
-    document.getElementById('maindisp').innerHTML=html;
-}
-
-function contactUpdated() {
-	const html = `<h2>Contact Updated</h2>
-<div class="form-group">
-	<br>
-<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
-</div>`;
-    document.getElementById('maindisp').innerHTML=html;
-    var str = html.concat(out);
-    var str = str.concat(strh);
-    document.getElementById("maindisp").innerHTML = str;
-}
-
-// function newContact() {
-// 	const html = `<h2>Add Contact</h2>
-// <div class="form-group">
-// <label>Enter Name:</label>
-// <input class="form-control" type="text" id="id" value="" required>
-// </div>
-// <div class="form-group">
-// <label>Enter Phone Number</label>
-// <input class="form-control" type="number" id="name" value="" required>
-// </div>
-// <div class="form-group">
-// <label>Enter Email</label>
-// <input class="form-control" type="text" id="city" value="" required><br/>
-// <button id="save" type="submit" class="btn btn-lg btn-success" onclick="contactSaved();">Save</button>
-// <button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
-// </div>`;
-//     document.getElementById('maindisp').innerHTML=html;
-// }
-
-function update() {
-	const html = `<h2>Update Contact</h2>
-<div class="form-group">
-<label>Enter Name:</label>
-<input class="form-control" type="text" id="id" value="" required>
-</div>
-<div class="form-group">
-<label>Enter Phone Number</label>
-<input class="form-control" type="number" id="name" value="" required>
-</div>
-<div class="form-group">
-<label>Enter Email</label>
-<input class="form-control" type="text" id="city" value="" required><br/>
-<button id="save" type="submit" class="btn btn-lg btn-success" onclick="contactUpdated();">Update</button>
-<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
-</div>`;
-    document.getElementById('maindisp').innerHTML=html;
-}
-
-function cDelete(email){
-	    var xmlhttp = new XMLHttpRequest();
-var url = "http://localhost:8080/manipulate?email="+email;
-
-xmlhttp.open("DELETE", url, true);
-xmlhttp.send();
-deleteRow()
-}
-
-function deleteRow(){
-	if(event.target.classList('btn-danger')){
-		event.target.closest('tr').remove();
-	}
-}
-
-function contactSaved() {
-	const html = `<h2>Contact Saved</h2>
-<div class="form-group">
-	<br>
-<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
-</div>`;
-    document.getElementById('maindisp').innerHTML=html;
-}
-
-function contactUpdated() {
-	const html = `<h2>Contact Updated</h2>
-<div class="form-group">
-	<br>
-<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
-</div>`;
-    document.getElementById('maindisp').innerHTML=html;
 }
