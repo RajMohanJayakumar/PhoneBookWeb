@@ -9,19 +9,6 @@ sections.forEach(function(userItem) {
 });
 }
 
-function search(){
-	 const Http = new XMLHttpRequest();
-const url='http://localhost:8080/manipulate?email=Ram2@gmail.com';
-Http.open('DELETE', url);
-Http.send();
-console.log(Http.responseText)
-Http.onreadystatechange = (e) => {
-  console.log(Http.responseText)
-}
-}
-
-// deleteRec('r@g');
-
   function deleteRec(email,callBack){
 	  axios.delete('http://localhost:8080/manipulate?email='+email,{})
 	  .then(res => callBack());
@@ -60,19 +47,20 @@ function update(name,phoneNumber,email) {
 	var updateHTML = `	<h2>Update Contact</h2>
 <div class="form-group">
 <label>Enter Name:</label>
-<input class="form-control" type="text" id="id" value="${name}" required>
+<input class="form-control" type="text" id="nameU" value="${name}" required>
 </div>
 <div class="form-group">
 <label>Enter Phone Number</label>
-<input class="form-control" type="number" id="name" value="${phoneNumber}" required>
+<input class="form-control" type="number" id="phoneU" value="${phoneNumber}" required>
 </div>
 <div class="form-group">
 <label>Enter Email</label>
-<input class="form-control" type="text" id="city" value="${email}" required><br/>
-<button id="save" type="submit" class="btn btn-lg btn-success" onclick="contactUpdated();">Update</button>
+
+<input class="form-control" type="text" id="emailU" value="${email}" required><br/>
+<input type="text" id="emailRec" value="${email}" style="display:none;">
+<button id="save" type="submit" class="btn btn-lg btn-success" onclick="updateContactSave();">Update</button>
 <button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
 </div>`
-
 document.getElementById('update').innerHTML = updateHTML;
 }
 
@@ -82,7 +70,22 @@ function contactDeleted() {
 }
 
 function saveContact(){
-	call('http://localhost:8080/manipulate',new payLoad('post',new data('Ram',8667,'ram@gmail.com'),null),phoneBookDisp);
+	
+	let name=document.getElementById('nameS').value;
+	let phone=document.getElementById('phoneS').value; 
+	let email=document.getElementById('emailS').value; 
+	console.log(name, phone, email);
+	saveRec(name,email,phone);
+	contactSaved();
+}
+
+function updateContactSave(){
+	let name=document.getElementById('nameU').value;
+	let phone=document.getElementById('phoneU').value; 
+	let email=document.getElementById('emailU').value; 
+	let emailRec = document.getElementById('emailRec').value; 
+	console.log(emailRec,name, phone, email);
+	updateRec(emailRec,name,email,phone,saveRec);
 	contactSaved();
 }
 
@@ -143,7 +146,7 @@ function phoneBookDisp(res) {
 
 })	
 
-	document.getElementById('pTable').innerText = '';
+	document.getElementById('pTable').innerHTML = '<tr><thead><th>Name</th><th>Phone Number</th><th>Email</th><th>Update</th><th>Delete</th></thead></tr>';
 	document.getElementById("pTable").appendChild(tbody1);
 
 	handleEvents();
@@ -156,7 +159,7 @@ function handleEvents(){
 		btn.addEventListener('click', function(event){
 			event.preventDefault();
 			var email = event.target.closest('tr').querySelector('.email').innerText;
-			deleteRec(email);
+			deleteRec(email,phonebook);
 		})
 	})
 
