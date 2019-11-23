@@ -22,14 +22,14 @@ Http.onreadystatechange = (e) => {
 
 // deleteRec('r@g');
 
-function deleteRec(email){
-	axios.delete('http://localhost:8080/manipulate?email='+email,{});
-	phonebook();
+  function deleteRec(email,callBack){
+	  axios.delete('http://localhost:8080/manipulate?email='+email,{})
+	  .then(res => callBack());
 }
 
 function updateRec(email1,name,email,phone,callBack){
-	axios.delete('http://localhost:8080/manipulate?email='+email1,{});
-	callBack(name,email,phone);
+	axios.delete('http://localhost:8080/manipulate?email='+email1,{})
+	.then(res => callBack(name,email,phone));
 }
 
 function saveRec(name,email,phone){
