@@ -33,20 +33,23 @@
 
 <div class="sections" id="newContact">
 				<h2>Add Contact</h2>
+				<form>
 <div class="form-group">
+	
 <label>Enter Name:</label>
-<input class="form-control" type="text" id="nameS" value="" required>
+<input class="form-control" type="text" id="nameS" value="" required />
 </div>
 <div class="form-group">
 <label>Enter Phone Number</label>
-<input class="form-control" type="number" id="phoneS" value="" required>
+<input class="form-control" type="number" id="phoneS" value="" required />
 </div>
 <div class="form-group">
 <label>Enter Email</label>
-<input class="form-control" type="text" id="emailS" value="" required><br/>
-<button id="save" type="submit" class="btn btn-lg btn-success" onclick="saveContact();">Save</button>
+<input class="form-control" type="email" id="emailS" value="" required /><br/>
+<input id="save" type="submit" class="btn btn-lg btn-success" value="Save" onclick="saveContact();"/>
 <button type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
 </div>
+</form>
 </div>
 
 
@@ -66,6 +69,14 @@
 
 <div class="sections" id="contactSaved">
 	<h2>Contact Saved</h2>
+<div class="form-group">
+	<br>
+<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
+</div>
+</div>
+
+<div class="sections" id="contactNotSaved">
+	<h2>Contact not saved due to insufficient data</h2>
 <div class="form-group">
 	<br>
 <button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>

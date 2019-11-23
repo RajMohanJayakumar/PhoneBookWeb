@@ -63,8 +63,10 @@ public class Manipulate extends HttpServlet{
 		assignObjects(request);
 		String str = jsonToString(request);
 		contactData = jsonPharse(str);
-        addContact(contactData);
-        System.out.println("Contact Added");
+		System.out.println(contactData.getEmail());
+		if(!contactData.getEmail().equals("") && !contactData.getName().equals("") && !contactData.getPhoneNumber().equals(""))
+		{        addContact(contactData);
+        System.out.println("Contact Added");}
 	}
 	
 	//Getting values from the request and updating the existing record

@@ -15,17 +15,23 @@ sections.forEach(function(userItem) {
 }
 
 function updateRec(email1,name,email,phone,callBack){
+	if(name != "" && email != "" && phone != ""){
 	axios.delete('http://localhost:8080/manipulate?email='+email1,{})
 	.then(res => callBack(name,email,phone));
+}else{
+	contactNotSaved();
+}
 }
 
 function saveRec(name,email,phone){
+	if(name != "" && email != "" && phone != ""){
 	axios.post('http://localhost:8080/manipulate',{
 		name : name,
 		phoneNumber : phone,
 		email : email
 	})
 	.then(res => phonebook());
+}
 }
 
 
@@ -39,12 +45,16 @@ function newContactAdd(){
 function newContact() {
 	hideSections(sections);
 	document.getElementById('newContact').style.display = 'block';
+	document.getElementById('nameS').value = '';
+	document.getElementById('emailS').value = '';
+	document.getElementById('phoneS').value = '';
 }
 
 function update(name,phoneNumber,email) {
 	hideSections(sections);
 	document.getElementById('update').style.display = 'block';
 	var updateHTML = `	<h2>Update Contact</h2>
+	<form>
 <div class="form-group">
 <label>Enter Name:</label>
 <input class="form-control" type="text" id="nameU" value="${name}" required>
@@ -56,11 +66,12 @@ function update(name,phoneNumber,email) {
 <div class="form-group">
 <label>Enter Email</label>
 
-<input class="form-control" type="text" id="emailU" value="${email}" required><br/>
+<input class="form-control" type="email" id="emailU" value="${email}" required><br/>
 <input type="text" id="emailRec" value="${email}" style="display:none;">
-<button id="save" type="submit" class="btn btn-lg btn-success" onclick="updateContactSave();">Update</button>
+<input id="save" type="submit" class="btn btn-lg btn-success" value="Update" onclick="updateContactSave();"/>
 <button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
-</div>`
+</div>
+</form>`
 document.getElementById('update').innerHTML = updateHTML;
 }
 
@@ -94,6 +105,13 @@ function contactSaved() {
 	document.getElementById('contactSaved').style.display = 'block';
 	
 }
+
+function contactNotSaved() {
+	hideSections(sections);
+	document.getElementById('contactNotSaved').style.display = 'block';
+	
+}
+
 function contactUpdated() {
 	hideSections(sections);
 	document.getElementById('contactUpdated').style.display = 'block';
@@ -146,7 +164,16 @@ function phoneBookDisp(res) {
 
 })	
 
-	document.getElementById('pTable').innerHTML = '<tr><thead><th>Name</th><th>Phone Number</th><th>Email</th><th>Update</th><th>Delete</th></thead></tr>';
+	document.getElementById('pTable').innerHTML = `
+	<tr>
+	<thead>
+	<th>Name</th>
+	<th>Phone Number</th>
+	<th>Email</th>
+	<th>Update</th>
+	<th>Delete</th>
+	</thead>
+	</tr>`;
 	document.getElementById("pTable").appendChild(tbody1);
 
 	handleEvents();
