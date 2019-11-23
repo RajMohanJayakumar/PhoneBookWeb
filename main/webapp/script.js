@@ -37,8 +37,8 @@ function saveRec(name,email,phone){
 		name : name,
 		phoneNumber : phone,
 		email : email
-	});
-	phonebook();
+	})
+	.then(res => phonebook());
 }
 
 
@@ -54,7 +54,7 @@ function newContact() {
 	document.getElementById('newContact').style.display = 'block';
 }
 
-function update(email) {
+function update(email,phoneNumber,email) {
 	hideSections(sections);
 	document.getElementById('update').style.display = 'block';
 }
@@ -148,8 +148,10 @@ function handleEvents(){
 			var phoneNumber = event.target.closest('tr').querySelector('.phoneNumber').innerText;
 			var name = event.target.closest('tr').querySelector('.name').innerText;
 			var email = event.target.closest('tr').querySelector('.email').innerText;
+			console.log(name);
+			console.log(phoneNumber);
 			console.log(email);
-			update(email);
+			update(name,phoneNumber,email);
 		})
 	})
 }
