@@ -54,9 +54,26 @@ function newContact() {
 	document.getElementById('newContact').style.display = 'block';
 }
 
-function update(email,phoneNumber,email) {
+function update(name,phoneNumber,email) {
 	hideSections(sections);
 	document.getElementById('update').style.display = 'block';
+	var updateHTML = `	<h2>Update Contact</h2>
+<div class="form-group">
+<label>Enter Name:</label>
+<input class="form-control" type="text" id="id" value="${name}" required>
+</div>
+<div class="form-group">
+<label>Enter Phone Number</label>
+<input class="form-control" type="number" id="name" value="${phoneNumber}" required>
+</div>
+<div class="form-group">
+<label>Enter Email</label>
+<input class="form-control" type="text" id="city" value="${email}" required><br/>
+<button id="save" type="submit" class="btn btn-lg btn-success" onclick="contactUpdated();">Update</button>
+<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
+</div>`
+
+document.getElementById('update').innerHTML = updateHTML;
 }
 
 function contactDeleted() {
@@ -90,6 +107,7 @@ function phoneBookDisp(res) {
 	res.data.forEach((e)=>{
 
 	var tr = document.createElement('tr');
+
 	var td1 = document.createElement("td");
 	var data = document.createTextNode(e.name);
 	td1.setAttribute('class','name');
