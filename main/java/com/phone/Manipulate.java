@@ -31,19 +31,20 @@ public class Manipulate extends HttpServlet{
 	HashMap<String, Contact> mUUID_Data;
 	TreeSet<String> mOrdered;
 	
+	//Assigning respective objects
 	public void assignObjects(HttpServletRequest request) {
 	HttpSession session = request.getSession();
 	
-    //Creating HashMap for Name-UUID record
+    //Assigning HashMap for Name-UUID record
     mName_UUID = (HashMap)session.getAttribute("nameUuid");
 
-    //Creating HashMap for Email-UUID record
+    //Assigning HashMap for Email-UUID record
     mEmail_UUID = (HashMap)session.getAttribute("emailUuid");
  
-    //Creating HashMap for UUID-ContactData record
+    //Assigning HashMap for UUID-ContactData record
     mUUID_Data = (HashMap)session.getAttribute("uuidData");
 
-    //Creating TreeSet for name record to get 'sorted name list' while iterating
+    //Assigning TreeSet for name record to get 'sorted name list' while iterating
     mOrdered = (TreeSet)session.getAttribute("mOrdered");
     
 	}
@@ -122,10 +123,10 @@ public class Manipulate extends HttpServlet{
 		
 	}
 	
+	//Getting the reference email for the record and deleting across the hashmaps
 	public void delete(HttpServletResponse response, String email) {
 		if (mEmail_UUID.containsKey(email)) {
 
-			
             //Fetching Details from Contact record
             contactData = mUUID_Data.get(mEmail_UUID.get(email));
 
@@ -147,6 +148,7 @@ public class Manipulate extends HttpServlet{
         }
 	}
 	
+	//method to add a contact with the values passed as arguments
 	public void addContact(Contact contactData) {
 		
 		//Generating random UUID
@@ -165,6 +167,7 @@ public class Manipulate extends HttpServlet{
         mOrdered.add(contactData.getName());
 	}
 	
+	//Fetching JSON standard from the request and passing as a string
 	public String jsonToString(HttpServletRequest request) throws IOException {
 		String line = "";
 		StringBuffer str = new StringBuffer();
@@ -177,6 +180,7 @@ public class Manipulate extends HttpServlet{
 		return jsonString;
 	}
 	
+	//Pharsing a json standard string format to an Object(Contact)
 	public Contact jsonPharse(String str) throws IOException {
 		
 		//Creating reference to store the contact variable

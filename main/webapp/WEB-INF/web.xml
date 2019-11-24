@@ -20,7 +20,7 @@
   
   <filter>
   <filter-name>CORS</filter-name>
-  <filter-class>com.phone.ForCORS</filter-class>
+  <filter-class>com.phone.SessionAndCORS_Filter</filter-class>
   </filter>
   
   <filter-mapping>

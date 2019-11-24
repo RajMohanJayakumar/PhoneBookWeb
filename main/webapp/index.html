@@ -1,98 +1,91 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Phonebook</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-	
-</head>
-<body>
-	<div style="height: 50px; color:blue;"><center><h1>Phonebook</h1></center></div>
+  <head>
+		<title>Phonebook</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+  <body>
+	<div style="height: 50px; color:blue;">
+		<center>
+			<h1>Phonebook</h1>
+		</center>
+	</div>
 	<div class="container">
 	<div class="jumbotron">
 
-			<div class="sections" id="phoneBook">
-				<tbody id="tbody">
-<button class="btn btn-primary" onclick="newContact();">Add a new Contact</button>
-<table class="table" id = "pTable">
-<tr>
-<thead>
-	<th>Name</th>
-	<th>Phone Number</th>
-	<th>Email</th>
-	<th>Update</th>
-	<th>Delete</th>
-</thead>
-</tr>
+	<!--Show all contacts block(first view)-->
+	<div class="sections" id="phoneBook">
+		<tbody id="tbody">
+			<button class="btn btn-primary" onclick="newContactForm();">Add a new Contact</button>
+			<table class="table" id = "pTable">
+				<!--Data displayed here after the API call-->
+			</table>
+	</div>
 
-</table>
-</div>
-
-<div class="sections" id="newContact">
-				<h2>Add Contact</h2>
-				<form>
-<div class="form-group">
-	
-<label>Enter Name:</label>
-<input class="form-control" type="text" id="nameS" value="" required />
-</div>
-<div class="form-group">
-<label>Enter Phone Number</label>
-<input class="form-control" type="number" id="phoneS" value="" required />
-</div>
-<div class="form-group">
-<label>Enter Email</label>
-<input class="form-control" type="email" id="emailS" value="" required /><br/>
-<input id="save" type="submit" class="btn btn-lg btn-success" value="Save" onclick="saveContact();"/>
-<button type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
-</div>
-</form>
-</div>
-
-
-<div class="sections" id="update">
-
-</div>
-
-
-<div class="sections" id="contactDeleted">
-	<h2>Contact deleted</h2>
-<div class="form-group">
-	<br>
-<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
-</div>
-<div id=""></div>
-</div>
-
-<div class="sections" id="contactSaved">
-	<h2>Contact Saved</h2>
-<div class="form-group">
-	<br>
-<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
-</div>
-</div>
-
-<div class="sections" id="contactNotSaved">
-	<h2>Contact not saved due to insufficient data</h2>
-<div class="form-group">
-	<br>
-<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
-</div>
-</div>
-
-<div class="sections" id="contactUpdated">
-	<h2>Contact Updated</h2>
-<div class="form-group">
-	<br>
-<button id="save" type="submit" class="btn btn-lg btn-success" onclick="phonebook();">Return to Phonebook</button>
-</div>
-</div>
+	<!--Add contact form block-->
+	<div class="sections" id="newContactForm">
+		<h2>Add Contact</h2>
+		<form>
+			<div class="form-group">
+				<label>Enter Name:</label>
+				<input class="form-control" type="text" id="nameS" value="" required />
 			</div>
+			<div class="form-group">
+				<label>Enter Phone Number</label>
+				<input class="form-control" type="number" id="phoneS" value="" required />
+			</div>
+			<div class="form-group">
+				<label>Enter Email</label>
+				<input class="form-control" type="email" id="emailS" value="" required /><br/>
+				<input type="submit" class="btn btn-lg btn-success" value="Save" onclick="saveContact();"/>
+				<button type="submit" class="btn btn-lg btn-success" onclick="showAllContacts();">Return to Phonebook</button>
+			</div>
+		</form>
+	</div>
+
+	<!--Update form block-->
+	<div class="sections" id="update"></div>
+
+	<!--Contact Deleted message block-->
+	<div class="sections" id="contactDeleted">
+		<h2>Contact deleted</h2>
+		<div class="form-group">
+			<br>
+				<button type="submit" class="btn btn-lg btn-success" onclick="showAllContacts();">Return to Phonebook</button>
+		</div>
+	</div>
+
+	<!--Contact saved message block-->
+	<div class="sections" id="contactSaved">
+		<h2>Contact Saved</h2>
+		<div class="form-group">
+			<br>
+				<button type="submit" class="btn btn-lg btn-success" onclick="showAllContacts();">Return to Phonebook</button>
+		</div>
+	</div>
+
+	<!--Contact not saved message block-->
+	<div class="sections" id="contactNotSaved">
+		<h2>Contact not saved due to insufficient data</h2>
+		<div class="form-group">
+			<br>
+				<button type="submit" class="btn btn-lg btn-success" onclick="showAllContacts();">Return to Phonebook</button>
+		</div>
+	</div>
+
+	<!--Contact updated message block-->
+	<div class="sections" id="contactUpdated">
+		<h2>Contact Updated</h2>
+		<div class="form-group">
+			<br>
+				<button type="submit" class="btn btn-lg btn-success" onclick="showAllContacts();">Return to Phonebook</button>
 		</div>
 	</div>
 	</div>
+	</div>
 	<script src="script.js"></script>
-</body>
+  </body>
 </html>

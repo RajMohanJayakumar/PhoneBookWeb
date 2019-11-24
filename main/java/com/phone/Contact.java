@@ -6,6 +6,8 @@ public class Contact implements Serializable{
 	private String name;
 	private String phoneNumber;
 	private String email;	
+	
+	//Parameterized constructor
 	public Contact(String name, String phoneNumber, String email) {
 		super();
 		this.name = name;
