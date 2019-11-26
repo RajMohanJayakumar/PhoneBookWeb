@@ -29,8 +29,6 @@ function updateRec(email1, name, email, phone, callBack) {
  if (name != "" && email != "" && phone != "") {
   axios.delete('http://localhost:8080/manipulate?email=' + email1, {})
    .then(res => callBack(name, email, phone));
- } else {
-  contactNotSaved();
  }
 }
 
@@ -78,8 +76,8 @@ function update(name, phoneNumber, email) {
 
 <input type="text" id="emailRec" value="${email}" style="display:none;">
 
-<input id="save" type="submit" class="btn btn-lg btn-success" value="Update" onclick="updateContactSave();"/>
-<button id="save" type="submit" class="btn btn-lg btn-success" onclick="showAllContacts();">Return to Phonebook</button>
+<button id="save" class="btn btn-lg btn-success" onclick="updateContactSave();">Update</button>
+<button id="save" class="btn btn-lg btn-success" onclick="showAllContacts();">Return to Phonebook</button>
 </div>
 </form>`
  document.getElementById('update').innerHTML = updateHTML;
