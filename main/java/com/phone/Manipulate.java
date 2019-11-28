@@ -64,7 +64,6 @@ public class Manipulate extends HttpServlet{
 		assignObjects(request);
 		String str = jsonToString(request);
 		contactData = jsonPharse(str);
-		System.out.println(contactData.getEmail());
 		if(!contactData.getEmail().equals("") && !contactData.getName().equals("") && !contactData.getPhoneNumber().equals(""))
 		{        addContact(contactData);
         System.out.println("Contact Added");}
@@ -77,8 +76,8 @@ public class Manipulate extends HttpServlet{
 		assignObjects(request);
 		mTemp = (String)request.getParameter("email");
 		delete(response,mTemp);
-		mTemp = (String)request.getParameter("data");
-		contactData = jsonPharse(mTemp);
+		String str = jsonToString(request);
+		contactData = jsonPharse(str);
 		addContact(contactData);
 		System.out.println("Contact Updated");
 		

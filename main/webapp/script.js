@@ -27,8 +27,13 @@ function deleteRec(email, callBack) {
 //To update a record using Axios
 function updateRec(email1, name, email, phone, callBack) {
  if (name != "" && email != "" && phone != "") {
-  axios.delete('http://localhost:8080/manipulate?email=' + email1, {})
-   .then(res => callBack(name, email, phone));
+  axios.put("http://localhost:8080/manipulate?email="+email1,
+    {
+    name: name,
+    phoneNumber: phone,
+    email: email
+  })
+   .then(res => callBack());
  }
 }
 
@@ -106,7 +111,7 @@ function updateContactSave() {
  let phone = document.getElementById('phoneU').value;
  let email = document.getElementById('emailU').value;
  let emailRec = document.getElementById('emailRec').value;
- updateRec(emailRec, name, email, phone, saveRec);
+ updateRec(emailRec, name, email, phone);
  contactSaved();
 }
 
@@ -206,7 +211,7 @@ function handleEvents() {
    var phoneNumber = event.target.closest('tr').querySelector('.phoneNumber').innerText;
    var name = event.target.closest('tr').querySelector('.name').innerText;
    var email = event.target.closest('tr').querySelector('.email').innerText;
-   update(name, phoneNumber, email);
+   update(name, phoneNumber, email,showAllContacts);
   })
  })
 }
