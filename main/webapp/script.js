@@ -101,7 +101,6 @@ function saveContact() {
  let phone = document.getElementById('phoneS').value;
  let email = document.getElementById('emailS').value;
  saveRec(name, email, phone);
- contactSaved();
 }
 
 /* Fetching the new updated values from text fields and 
@@ -112,14 +111,12 @@ function updateContactSave() {
  let email = document.getElementById('emailU').value;
  let emailRec = document.getElementById('emailRec').value;
  updateRec(emailRec, name, email, phone);
- contactSaved();
 }
 
 //To display contact saved message
 function contactSaved() {
  hideSections(sections);
  document.getElementById('contactSaved').style.display = 'block';
-
 }
 
 //To display contact not saved message
